@@ -43,6 +43,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         wrapperItem = wrnchWrapper(fingerPrint: UIDevice.current.identifierForVendor!.uuidString)
         
         print("OPEN CV VERSION: \(wrnchWrapper.openCVVersionString())")
+        print("Init took place on thread: \(Thread.current)")
         
         // Add preview View as a subview
         previewView = UIImageView(frame: view.bounds)
@@ -71,22 +72,23 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         
         
-        
-        // Convert sampleBuffer to UIImage
-        let imageBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)!
-        let ciimage : CIImage = CIImage(cvPixelBuffer: imageBuffer)
-        let context:CIContext = CIContext.init(options: nil)
-        let cgImage:CGImage = context.createCGImage(ciimage, from: ciimage.extent)!
-        let image:UIImage = UIImage.init(cgImage: cgImage)
-        
-        //  Rotate image
-        let rotatedImage = image.rotate(radians: .pi/2)
-        
-        
-        // Detect pose and get a returning image
-        let resultImage = wrapperItem?.detectPose(rotatedImage!)
-        
         DispatchQueue.main.async {
+            // Convert sampleBuffer to UIImage
+            let imageBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)!
+            let ciimage : CIImage = CIImage(cvPixelBuffer: imageBuffer)
+            let context:CIContext = CIContext.init(options: nil)
+            let cgImage:CGImage = context.createCGImage(ciimage, from: ciimage.extent)!
+            let image:UIImage = UIImage.init(cgImage: cgImage)
+            
+            //  Rotate image
+            let rotatedImage = image.rotate(radians: .pi/2)
+            
+            
+            // Detect pose and get a returning image
+            print("Detect pose is taking place on thread: \(Thread.current)")
+            let resultImage = self.wrapperItem?.detectPose(rotatedImage!)
+            
+            
             self.previewView.image = resultImage
         }
     }

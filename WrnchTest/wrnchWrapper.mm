@@ -120,7 +120,7 @@
         }
     }
     
-    printf ("Number of people: %d", people);
+    printf ("Number of people: %d\n", people);
     
     //-------------------
     // Convert back to Image, this is just for debug, to know we used a valid image

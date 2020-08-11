@@ -116,12 +116,15 @@ void wrnchConnector::detectPose(cv::Mat &currentFrame)
         return;
     }
     
-    if (currentFrame.empty()) {
+    // Also avoid calling if pose is not set for 3d
+    if (poseEstimator.Is3dInitialized() == false) {
+        std::cout << "Trying to call pose estimation, but it is not initialized\n";
         return;
     }
     
-    //Visualizer visualizer;
-    int rotationAngleY = 0;
+    if (currentFrame.empty()) {
+        return;
+    }
     
     try {
         
