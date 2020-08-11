@@ -1,0 +1,6 @@
+framework module Pods_WrnchTest {
+  umbrella header "Pods-WrnchTest-umbrella.h"
+
+  export *
+  module * { export * }
+}

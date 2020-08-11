@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "6B5E7F50-FC85-4671-A63B-9245D823939D"
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4F071C5D-35A3-4099-88E6-9185444CD0A8"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FritzPoseEstimationDemo/wrnchConnector.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "wrnchConnector::wrnchConnector(deviceFingerprint)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4F071C5D-35A3-4099-88E6-9185444CD0A8 - 30ff45478bb33898"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "wrnchConnector::wrnchConnector()"
+                  moduleName = "FritzPoseEstimationDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/guynir/Documents/Guy/Dev/iOSTests/PoseEstimationTests/FritzPoseEstimationDemo/wrnchConnector.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "99"
+                  endingLineNumber = "99"
+                  offsetFromSymbolStart = "72">
+               </Location>
+               <Location
+                  uuid = "4F071C5D-35A3-4099-88E6-9185444CD0A8 - 30ff45478bb33898"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "wrnchConnector::wrnchConnector()"
+                  moduleName = "FritzPoseEstimationDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/guynir/Documents/Guy/Dev/iOSTests/PoseEstimationTests/FritzPoseEstimationDemo/wrnchConnector.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "99"
+                  endingLineNumber = "99"
+                  offsetFromSymbolStart = "40">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4E07348A-724C-4F3D-95DD-C9F45ACEC219"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FritzPoseEstimationDemo/wrnchWrapper.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "-initWithFingerPrint:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.RuntimeIssueBreakpoint">
+         <BreakpointContent
+            uuid = "3680A836-4AA2-47A2-B79D-F8D0EA113FD1"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            breakpointStackSelectionBehavior = "1"
+            type = "4">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
