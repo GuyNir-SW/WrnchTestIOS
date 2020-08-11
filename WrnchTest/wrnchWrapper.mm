@@ -11,12 +11,11 @@
 //#import <opencv2/opencv.hpp>
 #import "wrnchWrapper.h"
 #include "wrnchConnector.hpp"
-
+#import <AVFoundation/AVFoundation.h>
+#import "WrnchTest-Swift.h"
 
 
 @interface wrnchWrapper()
-- (cv::Mat)cvMatFromUIImage:(UIImage *)image;
--(UIImage *)UIImageFromCVMat:(cv::Mat)cvMat;
 @property wrnchConnector *cppItem;
 
 
@@ -35,8 +34,9 @@
 
 
 
-- (UIImage *)detectPose:(UIImage *)image
+- (UIImage *)detectPose:(UIImage *)image : (DetectedResults *)detectedResults
 {
+    printf ("Got here\n");
     //-------------------
     // Convert to cvMat
     //-------------------
@@ -70,7 +70,10 @@
     //-------------------
     // Run WRNCH pose detection
     //-------------------
-    self.cppItem->detectPose(finalMat);
+    float poses[4][25*3];
+    int numPoses = 0;
+    
+    self.cppItem->detectPose(finalMat, poses, numPoses);
     
     
     
@@ -81,7 +84,8 @@
     
     
     
-    int people = 0;
+    
+   
     char* namesArray[] = {
         "RANKLE",
         "RKNEE",
@@ -109,7 +113,27 @@
         "RHEEL",
         "LHEEL"
     };
-
+    int cnt;
+    for (cnt =0; cnt < numPoses; cnt++) {
+        
+        //if (numberOfResults < 10) {
+         //   results[numberOfResults] = &pose;
+         //  numberOfResults++;
+         //
+        //}
+        
+        printf ("Person number: %d\n", cnt);
+        
+        int j;
+        //const float* positions = pose.GetPositions();
+        for (j=0; j<21 * 3; j+=3) {
+            printf ("%s == X: %.2f, Y: %.2f, Z: %.2f\n", namesArray[j/3],  poses[cnt][j], poses[cnt][j+1], poses[cnt][j+2]);
+        }
+        
+    }
+    printf ("Number of people: %d\n", numPoses);
+    [ detectedResults setNumPeople : numPoses ];
+    /*
     for (wrnch::Pose3dView pose : self.cppItem->poseEstimator.Humans3dRaw()) {
         printf ("Person number: %d\n", people);
         people++;
@@ -119,8 +143,8 @@
             printf ("%s == X: %.2f, Y: %.2f, Z: %.2f\n", namesArray[j/3],  positions[j], positions[j+1], positions[j+2]);
         }
     }
-    
-    printf ("Number of people: %d\n", people);
+    */
+    //printf ("Number of people: %d\n", people);
     
     //-------------------
     // Convert back to Image, this is just for debug, to know we used a valid image

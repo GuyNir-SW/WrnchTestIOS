@@ -18,14 +18,14 @@ public:
     wrnchConnector(const std::string &deviceFingerprint);
     ~wrnchConnector();
 public:
-    void detectPose(cv::Mat &currentFrame);
+    void detectPose(cv::Mat &currentFrame, float poses[4][25*3], int &numPoses);
 
     
     
     
     // Last pose results
-    int numberOfResults = 0;
-    wrnch::Pose3dView* results[10];
+    //int numberOfResults = 0;
+    //wrnch::Pose3dView* results[10];
     wrnch::PoseEstimator poseEstimator;
     wrnch::JointDefinition outputformat3d;
 private:

@@ -2,9 +2,17 @@ import UIKit
 import Photos
 
 
+@objc class DetectedResults : NSObject {
+    var numPeople : Int = 0
+    
+    @objc public func setNumPeople (_ numPeople : Int) {
+        self.numPeople = numPeople
+    }
+}
 
 class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
+    @IBOutlet weak var labelOutlet: UILabel!
     var previewView: UIImageView!
     
     var wrapperItem : wrnchWrapper?
@@ -47,8 +55,9 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         
         // Add preview View as a subview
         previewView = UIImageView(frame: view.bounds)
-        previewView.contentMode = .scaleAspectFill
+        previewView.contentMode = .scaleAspectFit
         view.addSubview(previewView)
+        view.sendSubviewToBack(previewView)
         
         let videoOutput = AVCaptureVideoDataOutput()
         videoOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA as UInt32]
@@ -86,8 +95,11 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
             
             // Detect pose and get a returning image
             print("Detect pose is taking place on thread: \(Thread.current)")
-            let resultImage = self.wrapperItem?.detectPose(rotatedImage!)
+            let detectedResults = DetectedResults()
+            let resultImage = self.wrapperItem?.detectPose(rotatedImage!, detectedResults)
             
+            // Print number of poses detected
+            self.labelOutlet.text = String("Poses: \(detectedResults.numPeople)")
             
             self.previewView.image = resultImage
         }

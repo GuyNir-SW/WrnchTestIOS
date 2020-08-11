@@ -47,7 +47,7 @@ wrnchConnector::wrnchConnector(const std::string &deviceFingerprint) {
      }
      */
     std::cout << "Step 1\n";
-    outputFormat = wrnch::JointDefinitionRegistry::Get("j25");
+    outputFormat = wrnch::JointDefinitionRegistry::Get("j21");
     
     //-------------------
     // Config parameters
@@ -105,8 +105,39 @@ wrnchConnector::wrnchConnector(const std::string &deviceFingerprint) {
 // Detect pose for a single frame
 //--------------
 
-void wrnchConnector::detectPose(cv::Mat &currentFrame)
+
+
+void wrnchConnector::detectPose(cv::Mat &currentFrame, float poses[4][25*3], int &numPoses)
 {
+    
+    
+    char* namesArray[] = {
+        "RANKLE",
+        "RKNEE",
+        "RHIP",
+        "LHIP",
+        "LKNEE",
+        "LANKLE",
+        "PELV",
+        "THRX",
+        "NECK",
+        "HEAD",
+        "RWRIST",
+        "RELBOW",
+        "RSHOULDER",
+        "LSHOULDER",
+        "LELBOW",
+        "LWRIST",
+        "NOSE",
+        "REYE",
+        "REAR",
+        "LEYE",
+        "LEAR",
+        "RTOE",
+        "LTOE",
+        "RHEEL",
+        "LHEEL"
+    };
     
     
     // Just change the test
@@ -132,28 +163,43 @@ void wrnchConnector::detectPose(cv::Mat &currentFrame)
         // May throw
         poseEstimator.ProcessFrame(currentFrame.data, currentFrame.cols, currentFrame.rows, poseOptions);
         std::cout << "Got Pose\n";
-        numberOfResults = 0;
+        
+        
+        numPoses = 0;
+        
         for (wrnch::Pose3dView pose : poseEstimator.Humans3dRaw()) {
-            if (numberOfResults < 10) {
-                results[numberOfResults] = &pose;
-                numberOfResults++;
-                
+            
+            if (numPoses >= 4) {
+                break;
             }
             
+            printf ("Person number: %d\n", numPoses+1);
+            int j;
+            const float* positions = pose.GetPositions();
+            for (j=0; j<pose.GetNumJoints() * 3; j+=3) {
+                printf ("%s == X: %.2f, Y: %.2f, Z: %.2f\n", namesArray[j/3],  positions[j], positions[j+1], positions[j+2]);
+                poses[numPoses][j]   = positions[j];
+                poses[numPoses][j+1] = positions[j+1];
+                poses[numPoses][j+2] = positions[j+2];
+            }
+            
+            numPoses++;
+            
         }
+        printf ("Number of people: %d\n", numPoses);
         
         std::cout << "POSE DONE\n";
     }
     catch (const std::exception& e) {
         std::cout << "Error: " << e.what() << std::endl;
         isValid = false;
-        numberOfResults = 0;
+        //numberOfResults = 0;
         return;
     }
     catch (...) {
         std::cerr << "Unknown error occurred" << std::endl;
         isValid = false;
-        numberOfResults = 0;
+        //numberOfResults = 0;
         return;
     }
     
